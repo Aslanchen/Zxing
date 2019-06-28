@@ -2,6 +2,7 @@
 1. 只保留扫码部分，删除其他功能
 2. 修改界面扫描部分绘制，支持横竖屏。
 3. 修改默认扫描长宽
+4. DecodeThread中decodeFormats设置支持类型
 
 # 横屏修改文件
 1. CameraManager.getFramingRect()
