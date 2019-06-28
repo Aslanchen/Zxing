@@ -18,8 +18,4 @@
   <string name="app_name">Barkod Tarayıcısı</string>
     <string name="button_ok">Tamam</string>
     <string name="msg_camera_framework_bug">Üzgünüz, Android kamera bir sorunla karşılaştı. Cihazı yeniden başlatmanız gerekebilir.</string>
-    <string name="msg_default_status">Barkodu taramak için vizördeki dikdörtgenin içerisine yerleştirin.</string>
-    <string name="preferences_front_light_auto">Otomatik</string>
-  <string name="preferences_front_light_off">Atıl</string>
-  <string name="preferences_front_light_on">Aktif</string>
 </resources>

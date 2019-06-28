@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Valitettavasti Androidin kameran toimiinta häiriintyi. Joudut ehkä käynnistämään laitteen uudelleen.</string>
-    <string name="msg_default_status">Aseta viivakoodi neliön sisälle skannataksesi sen.</string>
-    <string name="preferences_front_light_auto">Automaattinen</string>
-  <string name="preferences_front_light_off">Pois</string>
-  <string name="preferences_front_light_on">Päällä</string>
 </resources>

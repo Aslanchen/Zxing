@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Mit der Android-Kamera ist leider ein Fehler aufgetreten. Es könnte sein, dass Sie das Gerät neu starten müssen.</string>
-    <string name="msg_default_status">Positionieren Sie den Barcode innerhalb des Rechteckes.</string>
-    <string name="preferences_front_light_auto">Automatisch</string>
-  <string name="preferences_front_light_off">Aus</string>
-  <string name="preferences_front_light_on">Ein</string>
 </resources>

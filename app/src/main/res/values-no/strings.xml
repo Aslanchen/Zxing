@@ -15,8 +15,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Beklager, Android-kameraet fikk et problem. Det kan hende du må starte enheten på nytt.</string>
-    <string name="msg_default_status">Plasser en strekkode inni oppdagerrektangelen for å skanne den.</string>
-    <string name="preferences_front_light_auto">Automatisk</string>
-  <string name="preferences_front_light_off">Av</string>
-  <string name="preferences_front_light_on">På</string>
 </resources>

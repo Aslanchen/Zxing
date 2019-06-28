@@ -18,8 +18,4 @@
   <string name="app_name">סורק ברקודים</string>
     <string name="button_ok">אישור</string>
     <string name="msg_camera_framework_bug">סליחה, מצלמת האנדרואיד נתקלה בבעיה. ייתכן שיהיה עליך להפעיל מחדש את המכשיר.</string>
-    <string name="msg_default_status">הצב ברקוד בתוך המלבן כדי לסרוק אותו.</string>
-    <string name="preferences_front_light_auto">אוטומטי</string>
-  <string name="preferences_front_light_off">לא פעיל</string>
-  <string name="preferences_front_light_on">פעיל</string>
 </resources>

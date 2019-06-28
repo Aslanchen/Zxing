@@ -216,12 +216,13 @@ public final class CameraManager {
         return null;
       }
 
-      int width = screenResolution.x * 2 / 3;
-      int height = screenResolution.y * 2 / 3;
+      int width = screenResolution.x * 3 / 5;
+      int height = screenResolution.y * 3 / 5;
       width = height = Math.min(width, height);
 
       int leftOffset = (screenResolution.x - width) / 2;
       int topOffset = (screenResolution.y - height) / 2;
+      topOffset = topOffset - topOffset / 2;
       framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
       Log.d(TAG, "Calculated framing rect: " + framingRect);
     }
@@ -247,10 +248,19 @@ public final class CameraManager {
         // Called early, before init even finished
         return null;
       }
-      rect.left = rect.left * cameraResolution.x / screenResolution.x;
-      rect.right = rect.right * cameraResolution.x / screenResolution.x;
-      rect.top = rect.top * cameraResolution.y / screenResolution.y;
-      rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+
+      if (screenResolution.x < screenResolution.y) {
+        // 下面为竖屏模式
+        rect.left = rect.left * cameraResolution.y / screenResolution.x;
+        rect.right = rect.right * cameraResolution.y / screenResolution.x;
+        rect.top = rect.top * cameraResolution.x / screenResolution.y;
+        rect.bottom = rect.bottom * cameraResolution.x / screenResolution.y;
+      } else {
+        rect.left = rect.left * cameraResolution.x / screenResolution.x;
+        rect.right = rect.right * cameraResolution.x / screenResolution.x;
+        rect.top = rect.top * cameraResolution.y / screenResolution.y;
+        rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
+      }
       framingRectInPreview = rect;
     }
     return framingRectInPreview;
@@ -285,6 +295,7 @@ public final class CameraManager {
       }
       int leftOffset = (screenResolution.x - width) / 2;
       int topOffset = (screenResolution.y - height) / 2;
+      topOffset = topOffset - topOffset / 2;
       framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
       Log.d(TAG, "Calculated manual framing rect: " + framingRect);
       framingRectInPreview = null;
@@ -308,9 +319,23 @@ public final class CameraManager {
     if (rect == null) {
       return null;
     }
-    // Go ahead and assume it's YUV rather than die.
-    return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
-        rect.width(), rect.height(), false);
-  }
 
+    // Go ahead and assume it's YUV rather than die.
+    Point point = configManager.getScreenResolution();
+    if (point.x < point.y) {
+      byte[] rotatedData = new byte[data.length];
+      int newWidth = height;
+      int newHeight = width;
+      for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+          rotatedData[x * newWidth + newWidth - 1 - y] = data[x + y * width];
+        }
+      }
+      return new PlanarYUVLuminanceSource(rotatedData, newWidth, newHeight,
+          rect.left, rect.top, rect.width(), rect.height(), false);
+    } else {
+      return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
+          rect.width(), rect.height(), false);
+    }
+  }
 }

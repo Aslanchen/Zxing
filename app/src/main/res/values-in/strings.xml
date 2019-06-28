@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Maaf, kamera mengalami masalah. Anda mungkin perlu me-restart perangkat.</string>
-    <string name="msg_default_status">Letakkan barcode di dalam kotak jendela untuk memindai.</string>
-    <string name="preferences_front_light_auto">Otomatis</string>
-  <string name="preferences_front_light_off">Non-aktif</string>
-  <string name="preferences_front_light_on">Aktif</string>
 </resources>

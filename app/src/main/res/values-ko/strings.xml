@@ -18,8 +18,4 @@
   <string name="app_name">바코드 스캐너</string>
     <string name="button_ok">확인</string>
     <string name="msg_camera_framework_bug">죄송합니다. 기기의 카메라에 오류가 생겼습니다. 기기를 재시작 해야할 수 있습니다.</string>
-    <string name="msg_default_status">사각형 영역 안에 바코드를 위치해주세요.</string>
-    <string name="preferences_front_light_auto">자동</string>
-  <string name="preferences_front_light_off">항상 끄기</string>
-  <string name="preferences_front_light_on">항상 켜기</string>
 </resources>

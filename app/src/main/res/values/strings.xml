@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
   <string name="button_ok">OK</string>
   <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
-  <string name="msg_default_status">Place a barcode inside the viewfinder rectangle to scan it.</string>
-  <string name="preferences_front_light_auto">Automatic</string>
-  <string name="preferences_front_light_off">Off</string>
-  <string name="preferences_front_light_on">On</string>
 </resources>

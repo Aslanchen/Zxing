@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">V redu</string>
     <string name="msg_camera_framework_bug">Oprostite, Android kamera je naletela na težave. Mogoče boste morali ponovno zagnati napravo.</string>
-    <string name="msg_default_status">Za branje postavite črtno kodo znotraj iskala.</string>
-    <string name="preferences_front_light_auto">Samodejno</string>
-  <string name="preferences_front_light_off">Neaktivno</string>
-  <string name="preferences_front_light_on">Aktivna</string>
 </resources>

@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Przepraszamy, aparat Android napotkał problem. Może wystąpić potrzeba ponownego uruchomienia urządzenia.</string>
-    <string name="msg_default_status">Umieść kod paskowy w prostokącie wizjera aby zeskanować.</string>
-    <string name="preferences_front_light_auto">Automatyczny</string>
-  <string name="preferences_front_light_off">Nieaktywny</string>
-  <string name="preferences_front_light_on">Aktywny</string>
 </resources>

@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Sorry, er is een probleem met de Android-camera. Probeer je telefoon opnieuw op te starten.</string>
-    <string name="msg_default_status">Plaats een barcode binnen de rechthoek om deze te scannen.</string>
-    <string name="preferences_front_light_auto">Automatisch</string>
-  <string name="preferences_front_light_off">Uit</string>
-  <string name="preferences_front_light_on">Aan</string>
 </resources>

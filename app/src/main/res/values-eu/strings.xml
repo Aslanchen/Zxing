@@ -18,8 +18,4 @@
   <string name="app_name">Barra-kode eskanerra</string>
     <string name="button_ok">Ados</string>
     <string name="msg_camera_framework_bug">Barkatu, Android kamerak arazo bat izan du. Behar bada gailua berrabiarazi beharko duzu.</string>
-    <string name="msg_default_status">Kokatu barra-kode bat laukizuzenaren barruan eskaneatzeko.</string>
-    <string name="preferences_front_light_auto">Automatikoa</string>
-  <string name="preferences_front_light_off">Ezgaituta</string>
-  <string name="preferences_front_light_on">Gaituta</string>
 </resources>

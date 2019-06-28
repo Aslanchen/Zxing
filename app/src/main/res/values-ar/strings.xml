@@ -18,8 +18,4 @@
   <string name="app_name">ماسح الرمز الشريطي</string>
   <string name="button_ok">موافق</string>
   <string name="msg_camera_framework_bug">عفوا، حدثت مشكلة في كاميرا جهاز Android. قد تحتاج إلى إعادة تشغيل الجهاز.</string>
-  <string name="msg_default_status">قم بوضع الرمز الشريطي داخل حدود صورة الكاميرا ليتم مسحه.</string>
-  <string name="preferences_front_light_auto">أوتوماتيكي</string>
-  <string name="preferences_front_light_off">غير فعال</string>
-  <string name="preferences_front_light_on">نشط</string>
 </resources>

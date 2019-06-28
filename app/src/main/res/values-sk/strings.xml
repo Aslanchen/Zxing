@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Ospravedlňujeme sa, fotoaparát narazil na problém. Možno bude potrebné reštartovať zariadenie.</string>
-    <string name="msg_default_status">Umiestnite čiarový kód do vnútra obdĺžnika hľadáčiku pre skenovanie</string>
-    <string name="preferences_front_light_auto">Automaticky</string>
-  <string name="preferences_front_light_off">Vypnuté</string>
-  <string name="preferences_front_light_on">Zapnuté</string>
 </resources>

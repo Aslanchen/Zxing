@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Desculpe, a câmera do Android encontrou um problema. Poderá precisar reiniciar o dispositivo.</string>
-    <string name="msg_default_status">Alinhar código de barras com o exemplo para ser lido.</string>
-    <string name="preferences_front_light_auto">Automático</string>
-  <string name="preferences_front_light_off">Inativo</string>
-  <string name="preferences_front_light_on">Ativo</string>
 </resources>

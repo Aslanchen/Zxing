@@ -18,8 +18,4 @@
   <string name="app_name">बारकोड स्कैनर</string>
     <string name="button_ok">ठीक है</string>
     <string name="msg_camera_framework_bug">क्षमा करें, Android कैमरा एक समस्या का सामना करना पड़ा. आप डिवाइस को पुनरारंभ करने की आवश्यकता हो सकती है.</string>
-    <string name="msg_default_status">दृश्यदर्शी आयत के अंदर एक बारकोड प्लेस इसे स्कैन.</string>
-    <string name="preferences_front_light_auto">स्वचालित</string>
-  <string name="preferences_front_light_off">निष्क्रिय</string>
-  <string name="preferences_front_light_on">सक्रिय</string>
 </resources>

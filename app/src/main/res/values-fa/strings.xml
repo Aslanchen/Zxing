@@ -18,8 +18,4 @@
   <string name="app_name">باركد خوان</string>
     <string name="button_ok">تاييد</string>
     <string name="msg_camera_framework_bug">دوربين اندرويد با مشكل مواجه شده است. لطفا دستگاه خود را ري ست نماييد</string>
-    <string name="msg_default_status">براي اسكن باركد ، باركد بايستي در داخل كادر مستطيلي قرار بگيرد</string>
-    <string name="preferences_front_light_auto">اتوماتيك</string>
-  <string name="preferences_front_light_off">خاموش</string>
-  <string name="preferences_front_light_on">روشن</string>
 </resources>

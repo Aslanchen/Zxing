@@ -18,8 +18,4 @@
   <string name="app_name">Сканер штрих-кодов</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">К сожалению, возникла ошибка камеры. Может потребоваться перезагрузить устройство.</string>
-    <string name="msg_default_status">Чтобы сканировать штрих-код, поместите его в прямоугольник видоискателя.</string>
-    <string name="preferences_front_light_auto">Автоматически</string>
-  <string name="preferences_front_light_off">Выключен</string>
-  <string name="preferences_front_light_on">Включен</string>
 </resources>

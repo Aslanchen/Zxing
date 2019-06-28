@@ -18,8 +18,4 @@
   <string name="app_name">QRコードスキャナー</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Androidのカメラに問題が発生しました。デバイスを再起動する必要があります。</string>
-    <string name="msg_default_status">QRコードを画面の読み取り範囲内に写すとスキャンします。</string>
-    <string name="preferences_front_light_auto">自動</string>
-  <string name="preferences_front_light_off">ライトOFF</string>
-  <string name="preferences_front_light_on">ライトON</string>
 </resources>

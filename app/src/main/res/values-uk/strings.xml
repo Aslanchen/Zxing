@@ -18,8 +18,4 @@
   <string name="app_name">Сканер штрих-кодів</string>
     <string name="button_ok">Гаразд</string>
     <string name="msg_camera_framework_bug">На жаль, виникла помилка камери. Можливо, вам знадобиться перезавантажити пристрій.</string>
-    <string name="msg_default_status">Щоб відсканувати штрих-код, помістіть його в прямокутник видошукача.</string>
-    <string name="preferences_front_light_auto">Автоматично</string>
-  <string name="preferences_front_light_off">Вимкнено</string>
-  <string name="preferences_front_light_on">Увімкнено</string>
 </resources>

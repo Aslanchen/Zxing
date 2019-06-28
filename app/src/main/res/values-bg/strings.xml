@@ -18,8 +18,4 @@
   <string name="app_name">Баркод Скенер</string>
   <string name="button_ok">ОК</string>
   <string name="msg_camera_framework_bug">Съжаляваме, срещнахме проблем с камерата. Може да се наложи да рестартирате устройството си.</string>
-  <string name="msg_default_status">Сложете баркода вътре в правоъгълника за да го сканирате.</string>
-  <string name="preferences_front_light_auto">Автоматичен</string>
-  <string name="preferences_front_light_off">Неактивен</string>
-  <string name="preferences_front_light_on">Активен</string>
 </resources>

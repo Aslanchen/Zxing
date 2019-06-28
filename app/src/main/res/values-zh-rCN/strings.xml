@@ -18,8 +18,4 @@
   <string name="app_name">条码扫描器</string>
     <string name="button_ok">确定</string>
     <string name="msg_camera_framework_bug">很遗憾，Android 相机出现问题。你可能需要重启设备。</string>
-    <string name="msg_default_status">请将条码置于取景框内扫描。  </string>
-    <string name="preferences_front_light_auto">自动</string>
-  <string name="preferences_front_light_off">关</string>
-  <string name="preferences_front_light_on">开</string>
 </resources>

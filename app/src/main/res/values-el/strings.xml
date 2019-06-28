@@ -18,8 +18,4 @@
   <string name="app_name">Barcode Scanner</string>
     <string name="button_ok">OK</string>
     <string name="msg_camera_framework_bug">Συγνώμη, προέκυψε ένα πρόβλημα με την κάμερα. Ίσως χρειαστεί να επανεκιννήσετε τη συσκευή.</string>
-    <string name="msg_default_status">Τοποθετήστε ένα barcode μέσα στο πλαίσιο για να το σκανάρετε.</string>
-    <string name="preferences_front_light_auto">Αυτόματο</string>
-  <string name="preferences_front_light_off">Αδρανής</string>
-  <string name="preferences_front_light_on">Ενεργός</string>
 </resources>
