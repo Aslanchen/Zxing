@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2014 ZXing authors
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -->
+<resources>
+  <string name="app_name">條碼掃描器</string>
+    <string name="button_ok">確定</string>
+    <string name="msg_camera_framework_bug">很抱歉，Android 相機出現問題，您可能需要重新啟動您的裝置。</string>
+    <string name="msg_default_status">將條碼置於鏡頭範圍內以進行掃描。</string>
+    <string name="preferences_front_light_auto">自動</string>
+  <string name="preferences_front_light_off">關</string>
+  <string name="preferences_front_light_on">開</string>
+</resources>
