@@ -17,6 +17,4 @@
 <resources>
   <string name="button_ok">確定</string>
   <string name="msg_camera_framework_bug">很抱歉，Android 相機出現問題，您可能需要重新啟動您的裝置。</string>
-  <string name="error_permission_title">权限错误</string>
-  <string name="error_permission_message">需要攝像機權限，請先打開</string>
 </resources>

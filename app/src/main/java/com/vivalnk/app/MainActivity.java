@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements onScanResultListe
    */
   protected void showPermissionErrorDialog() {
     new AlertDialog.Builder(this)
-        .setTitle(com.google.zxing.client.android.R.string.error_permission_title)
+        .setTitle(R.string.error_permission_title)
         .setCancelable(false)
-        .setMessage(com.google.zxing.client.android.R.string.error_permission_message)
+        .setMessage(R.string.error_permission_message)
         .setPositiveButton(com.google.zxing.client.android.R.string.button_ok,
             new OnClickListener() {
               @Override
