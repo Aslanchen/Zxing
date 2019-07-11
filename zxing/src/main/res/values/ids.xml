@@ -20,5 +20,6 @@
   <item name="decode_succeeded" type="id"/>
   <item name="quit" type="id"/>
   <item name="restart_preview" type="id"/>
+  <item name="preview_view" type="id"/>
   <item name="viewfinder_view" type="id"/>
 </resources>

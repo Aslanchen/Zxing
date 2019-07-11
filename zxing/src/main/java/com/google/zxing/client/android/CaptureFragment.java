@@ -50,6 +50,7 @@ import java.io.IOException;
 public final class CaptureFragment extends Fragment implements SurfaceHolder.Callback {
 
   public static final String TAG_LISTENER = "listener";
+  public static final String TAG_LAYOUT_ID = "layoutId";
 
   private static final String TAG = CaptureFragment.class.getSimpleName();
 
@@ -61,6 +62,7 @@ public final class CaptureFragment extends Fragment implements SurfaceHolder.Cal
   private AmbientLightManager ambientLightManager;
 
   private onScanResultListener listener;
+  private Integer layoutId;
 
   ViewfinderView getViewfinderView() {
     return viewfinderView;
@@ -82,11 +84,24 @@ public final class CaptureFragment extends Fragment implements SurfaceHolder.Cal
     return fragment;
   }
 
+  public static CaptureFragment newInstance(onScanResultListener listener,
+      @Nullable Integer layoutId) {
+    Bundle args = new Bundle();
+    args.putSerializable(TAG_LISTENER, listener);
+    args.putInt(TAG_LAYOUT_ID, layoutId);
+    CaptureFragment fragment = new CaptureFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
     Bundle bundle = getArguments();
     listener = (onScanResultListener) bundle.getSerializable(TAG_LISTENER);
+    if (bundle.containsKey(TAG_LAYOUT_ID)) {
+      layoutId = bundle.getInt(TAG_LAYOUT_ID);
+    }
 
     Window window = getActivity().getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -100,7 +115,10 @@ public final class CaptureFragment extends Fragment implements SurfaceHolder.Cal
     beepManager = new BeepManager(getActivity());
     ambientLightManager = new AmbientLightManager(getActivity());
 
-    View view = LayoutInflater.from(getContext()).inflate(R.layout.capture, container, false);
+    if (layoutId == null) {
+      layoutId = R.layout.capture;
+    }
+    View view = LayoutInflater.from(getContext()).inflate(layoutId, container, false);
     return view;
   }
 
