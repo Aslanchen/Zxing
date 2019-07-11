@@ -3,6 +3,7 @@
 2. 修改界面扫描部分绘制，支持横竖屏。
 3. 修改默认扫描长宽
 4. DecodeThread中decodeFormats设置支持类型
+5. 增加android6.0权限检查和提示
 
 # 横屏修改文件
 1. CameraManager.getFramingRect()
