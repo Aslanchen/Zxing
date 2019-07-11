@@ -47,10 +47,7 @@ import java.io.IOException;
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-public final class CaptureFragment extends Fragment implements SurfaceHolder.Callback {
-
-  public static final String TAG_LISTENER = "listener";
-  public static final String TAG_LAYOUT_ID = "layoutId";
+public abstract class CaptureFragment extends Fragment implements SurfaceHolder.Callback {
 
   private static final String TAG = CaptureFragment.class.getSimpleName();
 
@@ -60,9 +57,6 @@ public final class CaptureFragment extends Fragment implements SurfaceHolder.Cal
   private boolean hasSurface;
   private BeepManager beepManager;
   private AmbientLightManager ambientLightManager;
-
-  private onScanResultListener listener;
-  private Integer layoutId;
 
   ViewfinderView getViewfinderView() {
     return viewfinderView;
@@ -76,36 +70,14 @@ public final class CaptureFragment extends Fragment implements SurfaceHolder.Cal
     return cameraManager;
   }
 
-  public static CaptureFragment newInstance(onScanResultListener listener) {
-    Bundle args = new Bundle();
-    args.putSerializable(TAG_LISTENER, listener);
-    CaptureFragment fragment = new CaptureFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
-  public static CaptureFragment newInstance(onScanResultListener listener,
-      @Nullable Integer layoutId) {
-    Bundle args = new Bundle();
-    args.putSerializable(TAG_LISTENER, listener);
-    args.putInt(TAG_LAYOUT_ID, layoutId);
-    CaptureFragment fragment = new CaptureFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
-
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-    Bundle bundle = getArguments();
-    listener = (onScanResultListener) bundle.getSerializable(TAG_LISTENER);
-    if (bundle.containsKey(TAG_LAYOUT_ID)) {
-      layoutId = bundle.getInt(TAG_LAYOUT_ID);
-    }
-
     Window window = getActivity().getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   }
+
+  public abstract int getLayoutId();
 
   @Nullable
   @Override
@@ -115,10 +87,7 @@ public final class CaptureFragment extends Fragment implements SurfaceHolder.Cal
     beepManager = new BeepManager(getActivity());
     ambientLightManager = new AmbientLightManager(getActivity());
 
-    if (layoutId == null) {
-      layoutId = R.layout.capture;
-    }
-    View view = LayoutInflater.from(getContext()).inflate(layoutId, container, false);
+    View view = LayoutInflater.from(getContext()).inflate(getLayoutId(), container, false);
     return view;
   }
 
@@ -203,10 +172,12 @@ public final class CaptureFragment extends Fragment implements SurfaceHolder.Cal
     beepManager.playBeepSoundAndVibrate();
     drawResultPoints(barcode, scaleFactor, rawResult);
 
-    listener.onScanResult(rawResult);
+    onScanResult(rawResult);
     Log.d(TAG, rawResult.getText());
     restartPreviewAfterDelay(1000L);
   }
+
+  public abstract void onScanResult(Result rawResult);
 
   /**
    * Superimpose a line for 1D or dots for 2D to highlight the key features of the barcode.

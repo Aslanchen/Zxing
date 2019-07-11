@@ -15,11 +15,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import com.google.zxing.Result;
-import com.google.zxing.client.android.CaptureFragment;
-import com.google.zxing.client.android.onScanResultListener;
 
-public class MainActivity extends AppCompatActivity implements onScanResultListener {
+public class MainActivity extends AppCompatActivity {
 
   public static final int REQUEST_PERMISSION = 1000;
 
@@ -39,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements onScanResultListe
     } else {
       FragmentManager fragmentManager = getSupportFragmentManager();
       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.flMain, CaptureFragment.newInstance(this));
+      fragmentTransaction.replace(R.id.flMain, ScanCodeFragment.newInstance());
       fragmentTransaction.commit();
     }
   }
@@ -79,13 +76,8 @@ public class MainActivity extends AppCompatActivity implements onScanResultListe
     if (requestCode == REQUEST_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
       FragmentManager fragmentManager = getSupportFragmentManager();
       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.flMain, CaptureFragment.newInstance(this));
+      fragmentTransaction.replace(R.id.flMain, ScanCodeFragment.newInstance());
       fragmentTransaction.commit();
     }
-  }
-
-  @Override
-  public void onScanResult(Result rawResult) {
-
   }
 }
