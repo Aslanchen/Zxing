@@ -1,4 +1,4 @@
-package com.vivalnk.app;
+package com.aslan.zxing;
 
 import org.junit.Test;
 

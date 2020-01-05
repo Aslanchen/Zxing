@@ -1,4 +1,4 @@
-package com.google.zxing.client.android;
+package com.aslan.zxing;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,9 +18,9 @@ public class ExampleInstrumentedTest {
 
   @Test
   public void useAppContext() {
-    // Context of the zxing under test.
+    // Context of the app under test.
     Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-    assertEquals("com.google.zxing.client.android", appContext.getPackageName());
+    assertEquals("com.aslan.zxing", appContext.getPackageName());
   }
 }
