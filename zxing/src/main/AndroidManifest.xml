@@ -17,15 +17,24 @@
   package="com.google.zxing.client.android"
   android:installLocation="auto">
 
-  <uses-permission android:name="android.permission.CAMERA"/>
-  <uses-permission android:name="android.permission.VIBRATE"/>
-  <uses-permission android:name="android.permission.FLASHLIGHT"/>
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.FLASHLIGHT" />
 
-  <uses-feature android:name="android.hardware.camera.any"/>
+  <uses-feature android:name="android.hardware.camera.any" />
   <uses-feature
     android:name="android.hardware.camera.autofocus"
-    android:required="false"/>
+    android:required="false" />
   <uses-feature
     android:name="android.hardware.camera.flash"
-    android:required="false"/>
+    android:required="false" />
+  <uses-feature android:name="android.hardware.screen.landscape" />
+
+  <application>
+    <activity
+      android:name=".CaptureActivity"
+      android:screenOrientation="portrait"
+      android:stateNotNeeded="true"
+      android:windowSoftInputMode="stateAlwaysHidden" />
+  </application>
 </manifest>

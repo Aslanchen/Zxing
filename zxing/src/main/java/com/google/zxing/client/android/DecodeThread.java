@@ -23,7 +23,6 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
 import java.util.Collection;
 import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -37,27 +36,30 @@ final class DecodeThread extends Thread {
   public static final String BARCODE_BITMAP = "barcode_bitmap";
   public static final String BARCODE_SCALED_FACTOR = "barcode_scaled_factor";
 
-  private final CaptureFragment activity;
+  private final CaptureActivity activity;
   private final Map<DecodeHintType, Object> hints;
   private Handler handler;
   private final CountDownLatch handlerInitLatch;
 
-  DecodeThread(CaptureFragment activity,
+  DecodeThread(CaptureActivity activity,
+      Collection<BarcodeFormat> decodeFormats,
+      Map<DecodeHintType, ?> baseHints,
+      String characterSet,
       ResultPointCallback resultPointCallback) {
 
     this.activity = activity;
     handlerInitLatch = new CountDownLatch(1);
 
     hints = new EnumMap<>(DecodeHintType.class);
+    if (baseHints != null) {
+      hints.putAll(baseHints);
+    }
 
-    // The prefs can't change while the thread is running, so pick them up once here.
-    Collection<BarcodeFormat> decodeFormats = EnumSet.noneOf(BarcodeFormat.class);
-    decodeFormats.addAll(DecodeFormatManager.INDUSTRIAL_FORMATS);
-    decodeFormats.addAll(DecodeFormatManager.QR_CODE_FORMATS);
-
-    hints.put(DecodeHintType.TRY_HARDER, BarcodeFormat.QR_CODE);
     hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
-    hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
+
+    if (characterSet != null) {
+      hints.put(DecodeHintType.CHARACTER_SET, characterSet);
+    }
     hints.put(DecodeHintType.NEED_RESULT_POINT_CALLBACK, resultPointCallback);
   }
 
@@ -77,4 +79,5 @@ final class DecodeThread extends Thread {
     handlerInitLatch.countDown();
     Looper.loop();
   }
+
 }

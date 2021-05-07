@@ -24,9 +24,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import com.google.zxing.PlanarYUVLuminanceSource;
-import com.google.zxing.client.android.CaptureFragment;
 import com.google.zxing.client.android.camera.open.OpenCamera;
 import com.google.zxing.client.android.camera.open.OpenCameraInterface;
+
 import java.io.IOException;
 
 /**
@@ -40,6 +40,11 @@ import java.io.IOException;
 public final class CameraManager {
 
   private static final String TAG = CameraManager.class.getSimpleName();
+
+  private static final int MIN_FRAME_WIDTH = 240;
+  private static final int MIN_FRAME_HEIGHT = 240;
+  private static final int MAX_FRAME_WIDTH = 1200; // = 5/8 * 1920
+  private static final int MAX_FRAME_HEIGHT = 675; // = 5/8 * 1080
 
   private final Context context;
   private final CameraConfigurationManager configManager;
@@ -92,8 +97,7 @@ public final class CameraManager {
 
     Camera cameraObject = theCamera.getCamera();
     Camera.Parameters parameters = cameraObject.getParameters();
-    String parametersFlattened =
-        parameters == null ? null : parameters.flatten(); // Save these, temporarily
+    String parametersFlattened = parameters == null ? null : parameters.flatten(); // Save these, temporarily
     try {
       configManager.setDesiredCameraParameters(theCamera, false);
     } catch (RuntimeException re) {
@@ -163,7 +167,7 @@ public final class CameraManager {
   }
 
   /**
-   * Convenience method for {@link CaptureFragment}
+   * Convenience method for {@link com.google.zxing.client.android.CaptureActivity}
    *
    * @param newSetting if {@code true}, light should be turned on if currently off. And vice versa.
    */
@@ -201,8 +205,8 @@ public final class CameraManager {
 
   /**
    * Calculates the framing rect which the UI should draw to show the user where to place the
-   * barcode. This target helps with alignment as well as forces the user to hold the device far
-   * enough away to ensure the image will be in focus.
+   * barcode. This target helps with alignment as well as forces the user to hold the device
+   * far enough away to ensure the image will be in focus.
    *
    * @return The rectangle to draw on screen in window coordinates.
    */
@@ -217,22 +221,27 @@ public final class CameraManager {
         return null;
       }
 
-      int width = screenResolution.x * 3 / 5;
-      int height = screenResolution.y * 3 / 5;
-      width = height = Math.min(width, height);
+      int width = findDesiredDimensionInRange(screenResolution.x, MIN_FRAME_WIDTH, MAX_FRAME_WIDTH);
+      int height = findDesiredDimensionInRange(screenResolution.y, MIN_FRAME_HEIGHT, MAX_FRAME_HEIGHT);
 
       int leftOffset = (screenResolution.x - width) / 2;
       int topOffset = (screenResolution.y - height) / 2;
-      topOffset = topOffset - topOffset / 2;
       framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
-      Log.d(TAG, "Calculated framing rect: " + framingRect);
     }
     return framingRect;
   }
 
+  private static int findDesiredDimensionInRange(int resolution, int hardMin, int hardMax) {
+    int dim = 5 * resolution / 8; // Target 5/8 of each dimension
+    if (dim < hardMin) {
+      return hardMin;
+    }
+    return Math.min(dim, hardMax);
+  }
+
   /**
-   * Like {@link #getFramingRect} but coordinates are in terms of the preview frame, not UI /
-   * screen.
+   * Like {@link #getFramingRect} but coordinates are in terms of the preview frame,
+   * not UI / screen.
    *
    * @return {@link Rect} expressing barcode scan area in terms of the preview size
    */
@@ -249,19 +258,10 @@ public final class CameraManager {
         // Called early, before init even finished
         return null;
       }
-
-      if (screenResolution.x < screenResolution.y) {
-        // 下面为竖屏模式
-        rect.left = rect.left * cameraResolution.y / screenResolution.x;
-        rect.right = rect.right * cameraResolution.y / screenResolution.x;
-        rect.top = rect.top * cameraResolution.x / screenResolution.y;
-        rect.bottom = rect.bottom * cameraResolution.x / screenResolution.y;
-      } else {
-        rect.left = rect.left * cameraResolution.x / screenResolution.x;
-        rect.right = rect.right * cameraResolution.x / screenResolution.x;
-        rect.top = rect.top * cameraResolution.y / screenResolution.y;
-        rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
-      }
+      rect.left = rect.left * cameraResolution.x / screenResolution.x;
+      rect.right = rect.right * cameraResolution.x / screenResolution.x;
+      rect.top = rect.top * cameraResolution.y / screenResolution.y;
+      rect.bottom = rect.bottom * cameraResolution.y / screenResolution.y;
       framingRectInPreview = rect;
     }
     return framingRectInPreview;
@@ -269,8 +269,8 @@ public final class CameraManager {
 
 
   /**
-   * Allows third party apps to specify the camera ID, rather than determine it automatically based
-   * on available cameras and their orientation.
+   * Allows third party apps to specify the camera ID, rather than determine
+   * it automatically based on available cameras and their orientation.
    *
    * @param cameraId camera ID of the camera to use. A negative value means "no preference".
    */
@@ -296,7 +296,6 @@ public final class CameraManager {
       }
       int leftOffset = (screenResolution.x - width) / 2;
       int topOffset = (screenResolution.y - height) / 2;
-      topOffset = topOffset - topOffset / 2;
       framingRect = new Rect(leftOffset, topOffset, leftOffset + width, topOffset + height);
       Log.d(TAG, "Calculated manual framing rect: " + framingRect);
       framingRectInPreview = null;
@@ -307,8 +306,8 @@ public final class CameraManager {
   }
 
   /**
-   * A factory method to build the appropriate LuminanceSource object based on the format of the
-   * preview buffers, as described by Camera.Parameters.
+   * A factory method to build the appropriate LuminanceSource object based on the format
+   * of the preview buffers, as described by Camera.Parameters.
    *
    * @param data A preview frame.
    * @param width The width of the image.
@@ -320,23 +319,9 @@ public final class CameraManager {
     if (rect == null) {
       return null;
     }
-
     // Go ahead and assume it's YUV rather than die.
-    Point point = configManager.getScreenResolution();
-    if (point.x < point.y) {
-      byte[] rotatedData = new byte[data.length];
-      int newWidth = height;
-      int newHeight = width;
-      for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-          rotatedData[x * newWidth + newWidth - 1 - y] = data[x + y * width];
-        }
-      }
-      return new PlanarYUVLuminanceSource(rotatedData, newWidth, newHeight,
-          rect.left, rect.top, rect.width(), rect.height(), false);
-    } else {
-      return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
-          rect.width(), rect.height(), false);
-    }
+    return new PlanarYUVLuminanceSource(data, width, height, rect.left, rect.top,
+                                        rect.width(), rect.height(), false);
   }
+
 }

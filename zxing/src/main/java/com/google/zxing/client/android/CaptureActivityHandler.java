@@ -16,14 +16,26 @@
 
 package com.google.zxing.client.android;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Browser;
+import android.util.Log;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.client.android.camera.CameraManager;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * This class handles all the messaging which comprises the state machine for capture.
@@ -34,7 +46,7 @@ public final class CaptureActivityHandler extends Handler {
 
   private static final String TAG = CaptureActivityHandler.class.getSimpleName();
 
-  private final CaptureFragment activity;
+  private final CaptureActivity activity;
   private final DecodeThread decodeThread;
   private State state;
   private final CameraManager cameraManager;
@@ -45,10 +57,13 @@ public final class CaptureActivityHandler extends Handler {
     DONE
   }
 
-  CaptureActivityHandler(CaptureFragment activity,
+  CaptureActivityHandler(CaptureActivity activity,
+      Collection<BarcodeFormat> decodeFormats,
+      Map<DecodeHintType, ?> baseHints,
+      String characterSet,
       CameraManager cameraManager) {
     this.activity = activity;
-    decodeThread = new DecodeThread(activity,
+    decodeThread = new DecodeThread(activity, decodeFormats, baseHints, characterSet,
         new ViewfinderResultPointCallback(activity.getViewfinderView()));
     decodeThread.start();
     state = State.SUCCESS;
@@ -79,10 +94,44 @@ public final class CaptureActivityHandler extends Handler {
         scaleFactor = bundle.getFloat(DecodeThread.BARCODE_SCALED_FACTOR);
       }
       activity.handleDecode((Result) message.obj, barcode, scaleFactor);
-    } else if (message.what == R.id.decode_failed) {
-      // We're decoding as fast as possible, so when one decode fails, start another.
+    } else if (message.what
+        == R.id.decode_failed) {// We're decoding as fast as possible, so when one decode fails, start another.
       state = State.PREVIEW;
       cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
+    } else if (message.what == R.id.return_scan_result) {
+      activity.setResult(Activity.RESULT_OK, (Intent) message.obj);
+      activity.finish();
+    } else if (message.what == R.id.launch_product_query) {
+      String url = (String) message.obj;
+
+      Intent intent = new Intent(Intent.ACTION_VIEW);
+      intent.addFlags(Intents.FLAG_NEW_DOC);
+      intent.setData(Uri.parse(url));
+
+      ResolveInfo resolveInfo =
+          activity.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+      String browserPackageName = null;
+      if (resolveInfo != null && resolveInfo.activityInfo != null) {
+        browserPackageName = resolveInfo.activityInfo.packageName;
+      }
+
+      // Needed for default Android browser / Chrome only apparently
+      if (browserPackageName != null) {
+        switch (browserPackageName) {
+          case "com.android.browser":
+          case "com.android.chrome":
+            intent.setPackage(browserPackageName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Browser.EXTRA_APPLICATION_ID, browserPackageName);
+            break;
+        }
+      }
+
+      try {
+        activity.startActivity(intent);
+      } catch (ActivityNotFoundException ignored) {
+        Log.w(TAG, "Can't find anything to handle VIEW of URI");
+      }
     }
   }
 
@@ -110,4 +159,5 @@ public final class CaptureActivityHandler extends Handler {
       activity.drawViewfinder();
     }
   }
+
 }

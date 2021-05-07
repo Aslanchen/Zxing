@@ -1,6 +1,7 @@
 package com.aslan.zxing;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -9,22 +10,40 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import com.google.zxing.client.android.CaptureActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
   public static final int REQUEST_PERMISSION = 1000;
+  public static final int REQUEST_SCAN = 1001;
+
+  private TextView tvScan;
+  private Button btScan;
+  private Button btCreat;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    tvScan = findViewById(R.id.tvScan);
+    btScan = findViewById(R.id.btScan);
+    btCreat = findViewById(R.id.btCreat);
+
+    btScan.setOnClickListener(this);
+    btCreat.setOnClickListener(this);
+
+    checkPermission();
+  }
+
+  private boolean checkPermission() {
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         != PackageManager.PERMISSION_GRANTED) {
       if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
@@ -33,11 +52,9 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat
             .requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION);
       }
+      return false;
     } else {
-      FragmentManager fragmentManager = getSupportFragmentManager();
-      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.flMain, ScanCodeFragment.newInstance());
-      fragmentTransaction.commit();
+      return true;
     }
   }
 
@@ -70,14 +87,32 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-      @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    if (requestCode == REQUEST_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-      FragmentManager fragmentManager = getSupportFragmentManager();
-      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-      fragmentTransaction.replace(R.id.flMain, ScanCodeFragment.newInstance());
-      fragmentTransaction.commit();
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (REQUEST_SCAN == requestCode && resultCode == Activity.RESULT_OK && data != null) {
+      tvScan.setText(data.getStringExtra(CaptureActivity.TAG_RESULT_Text));
     }
+  }
+
+  @Override
+  public void onClick(View v) {
+    if (v == btScan) {
+      doScan();
+    } else if (v == btCreat) {
+      doCreat();
+    }
+  }
+
+  private void doScan() {
+    if (!checkPermission()) {
+      return;
+    }
+
+    Intent intent = new Intent(this, CaptureActivity.class);
+    startActivityForResult(intent, REQUEST_SCAN);
+  }
+
+  private void doCreat() {
+
   }
 }
