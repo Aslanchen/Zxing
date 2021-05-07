@@ -36,6 +36,7 @@
     app:layout_constraintTop_toBottomOf="@+id/btScan" />
 
   <ImageView
+    android:id="@+id/ivImage"
     android:layout_width="100dp"
     android:layout_height="100dp"
     android:layout_marginTop="10dp"

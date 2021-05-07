@@ -7,17 +7,22 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.android.CaptureActivity;
+import com.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   private TextView tvScan;
   private Button btScan;
   private Button btCreat;
+  private ImageView ivImage;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     tvScan = findViewById(R.id.tvScan);
     btScan = findViewById(R.id.btScan);
     btCreat = findViewById(R.id.btCreat);
+    ivImage = findViewById(R.id.ivImage);
 
     btScan.setOnClickListener(this);
     btCreat.setOnClickListener(this);
@@ -113,6 +120,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   private void doCreat() {
-
+    QRCodeEncoder mQRCodeEncoder = new QRCodeEncoder(BarcodeFormat.QR_CODE, ivImage.getWidth());
+    try {
+      Bitmap bitmap = mQRCodeEncoder.encodeAsBitmap("test");
+      ivImage.setImageBitmap(bitmap);
+    } catch (WriterException e) {
+      e.printStackTrace();
+    }
   }
 }
